@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DOGZILLA 系统组织 · 讨论原型</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#21333d;background:#f3f6f7;line-height:1.65}body{max-width:1180px;margin:auto;padding:26px}h1{font-size:28px;margin:0}h2{font-size:21px;margin:24px 0 12px}h3{font-size:16px;margin:0 0 8px}p{margin:8px 0}section,.card{background:white;border:1px solid #d7e1e5;border-radius:10px;padding:18px;margin:14px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.grid .card{margin:0}.tag{color:#087b76;font-weight:700;font-size:13px}.muted{color:#596d78;font-size:14px}.notice{border-left:4px solid #07857f;padding:10px 16px;background:#e5f3f1}.flow{background:#edf5f5;padding:16px;border-radius:8px;overflow:auto;font:15px/1.9 ui-monospace,monospace;white-space:pre-wrap}table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #dce4e8;padding:10px;text-align:left;vertical-align:top}button{background:#fff;color:#155750;border:1px solid #9cbdb9;border-radius:6px;padding:9px 13px;margin:4px;cursor:pointer;font:inherit;font-size:14px}button:hover,button[aria-selected=true]{background:#e1f2ef}button:disabled{opacity:.45;cursor:default}.primary{background:#087f78;color:white}.primary:hover{background:#096c66}.state{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.field{background:#f3f7f8;border-radius:6px;padding:10px}.field small{display:block;color:#60717a}.field strong{font-size:15px}#event{padding:12px;background:#e5f3f1;margin-top:12px}code{background:#edf2f4;padding:1px 4px;border-radius:3px}a{color:#087b76}summary{cursor:pointer;font-weight:600}@media(max-width:760px){body{padding:12px}.grid,.state{grid-template-columns:1fr 1fr}table{font-size:12px}th,td{padding:6px}}@media(max-width:480px){.grid,.state{grid-template-columns:1fr}}
+</style>
+<header><div class="tag">THROWAWAY PROTOTYPE · 待讨论 · 不连接机器人</div><h1>DOGZILLA：代码如何组织，系统如何协同？</h1>
+<p>用具体的部署、包、节点和数据流，讨论 A/B/C/D 的接口边界。下方按钮只改变网页内存中的模拟状态。</p>
+<p class="notice">已确认：模块职责与运动保护原则。候选：以下包名、节点拆分、接口形式与启动方案。待真机核实：厂商环境、数据接口、停止能力与性能。任何“就绪 / 停稳 / 定位有效”均为演示输入，不是实测结果。</p></header>
+<h2>① 三个位置，各自运行什么</h2>
+<div class="grid"><div class="card"><span class="tag">电脑 1 · 已确认</span><h3>WSL2 + Docker</h3><p>Ubuntu 22.04 + Humble 容器中开发、构建、检查与离线回放；主要辅助 B/C。</p><p class="muted">回放入口断开真实运动执行链。用录包替换设备数据。</p></div><div class="card"><span class="tag">电脑 2 · 已确认</span><h3>原生 Ubuntu 22.04 + Humble</h3><p>主要作为 A/D 的部署与联调操作端，通过 SSH 启动机器人程序、查看日志、获取录包。</p><p class="muted">首阶段无需跨设备 ROS 通信；实时 RViz 后续验证。</p></div><div class="card"><span class="tag">机器人 · 厂商环境待核实</span><h3>集中运行真机节点</h3><p>A 驱动与适配、B 估计与地图、C 保护、D 协调和录包。</p><p class="muted">保留厂商系统。SSH 只是操作入口，遥控输入协议和断连检测仍需设计。</p></div></div>
+<section><h2>② 一个 workspace，少量职责明确的 package</h2><p><strong>package</strong> 管理代码和依赖；<strong>node</strong> 是运行中的 ROS 职责单元；<strong>process</strong> 是系统进程。下面暂按自研节点独立进程说明，一个模块可以使用多个节点，也可以复用外部包。</p>
+<table><thead><tr><th>候选 package / 负责人</th><th>运行节点或内容（候选）</th><th>应负责 / 不应包办</th></tr></thead><tbody>
+<tr><td><code>dogzilla_device</code><br>A · 4</td><td>厂商驱动接入、<code>device_adapter</code>、外参配置</td><td>提供扫描、反馈、实际运动和停止接口；不决定 B 的里程计方案。</td></tr>
+<tr><td><code>dogzilla_mapping</code><br>B · Boon-Zhu（3）</td><td>运动估计组件、建图或定位组件、<code>mapping_manager</code></td><td>复用上游算法，管理地图与有效位姿；不承担实时障碍保护。</td></tr>
+<tr><td><code>dogzilla_protection</code><br>C · NeuviFuri1115（1）</td><td><code>teleop_input</code>、<code>motion_guard</code>、可离线测试的纯逻辑</td><td>输入新鲜度、障碍限制与故障停车；全局定位失效不直接禁止受保护遥控。</td></tr>
+<tr><td><code>dogzilla_bringup</code><br>D · 2</td><td>launch 配置、<code>runtime_coordinator</code>、回放入口</td><td>启动/切换、就绪检查与状态汇总；不重复实现 B 的地图保存。</td></tr>
+<tr><td><code>dogzilla_interfaces</code><br>按需创建</td><td>确需自定义的消息、请求与响应</td><td>共用契约；优先复用合适的标准消息，不先创建大量占位接口。</td></tr></tbody></table>
+<p class="muted">前四包暂按 ament_python；自定义接口包需要相应生成步骤，可用 ament_cmake。上游 C++ 算法无需重写成 Python。全部通过 colcon 统一构建。</p></section>
+<section><h2>③ 节点之间传什么</h2><div class="flow">人工输入 → C 输入转换 → C 运动保护 → A 运动适配 → 原有步态控制
+                          ↑
+A 雷达扫描 ────────────────┘
+    └────→ B 运动估计 / 建图或定位 ← A 可用反馈（待核实）
+
+A / B / C 状态 ─────→ D 运行协调
+D ──调用 B 的保存/加载能力；协调停止、模式切换和就绪检查
+
+TF：map ──[B 当前建图或定位组件]──→ odom
+    odom ──[B 选定的唯一运动估计发布者]──→ base_link
+    base_link ──[A 核实的外参发布者]──→ 传感器</div>
+<table><thead><tr><th>通信形式</th><th>本项目中的候选用途</th><th>仍需决定</th></tr></thead><tbody><tr><td>topic：连续发布</td><td>扫描、反馈、原始/受保护运动输入、状态</td><td>消息类型、时效、QoS；原始指令不能直接接入 A</td></tr><tr><td>service：快速请求/响应</td><td>快速状态查询、短操作</td><td>“接受”与“完成”必须区分</td></tr><tr><td>action：长任务、反馈/取消</td><td>耗时保存/切换若需要这些语义，可考虑</td><td>不要求所有操作都用 action；先看上游能力与实际耗时</td></tr></tbody></table>
+<p class="muted">命名只是候选，真实厂商话题可通过适配和 remap 接入。每段 TF 只允许一个发布者；这里没有假定已有可靠 odom。</p></section>
+<section><h2>④ 当前模拟状态</h2><div id="state" class="state" aria-live="polite"></div><div id="event" aria-live="polite"></div><p class="muted">启动顺序示意：A/C 默认停止 → 数据与执行接口就绪 → 启动 B 的选定模式 → 等待新遥控指令。launch 启动成功不等于业务数据就绪。</p></section>
+<section><h2>⑤ 自由操作</h2><p>尝试在故障恢复后不发送新指令，或定位失效时继续受保护遥控。所有按钮始终可尝试；不满足条件时说明拒绝原因。</p><div id="actions"></div><button id="reset">重置全部模拟状态</button></section>
+<section><h2>⑥ 引导场景</h2><div id="tabs" role="tablist" aria-label="演练场景"></div><div id="walkthrough"></div><p class="muted">点场景标签会重置状态。自由操作后若偏离步骤，重新选择场景即可。</p></section>
+<section><h2>这份原型尚不能回答什么</h2><p>运动指令的分量、有效期、真实停止距离、雷达覆盖、转身空间、超时数值、定位有效性判据和地图格式，都需要后续决定或实测。原型只把“当前方向可通行”当作输入，不模拟碰撞几何。</p><p>地图与绑定只在内存中模拟；“确认停稳”由人点击代替反馈。真实系统须定义可验证的停车条件，以及 C 崩溃时 A 的兜底。按钮上的模式切换也不证明上游组件支持热切换。</p><p>评审入口：是否接受“职责分包 + 上游组件复用 + 机器人集中运行 + 独立回放入口”的骨架？详细候选接口和一手资料见同目录 <a href="findings.md">findings.md</a>。</p></section>
+<script id="model">
+// Pure in-memory discussion model. No ROS, timers, storage or DOM access.
+const initial = () => ({running:false,devices:false,scan:false,remote:false,clear:true,mode:'none',pending:null,pose:false,map:0,binding:0,stopConfirmed:true,moving:false,fresh:false,last:'尚未启动；所有运动输出为停止。'});
+function transition(previous, action) {
+  const s={...previous};
+  const stop=()=>{s.moving=false;s.fresh=false;s.stopConfirmed=false;};
+  const fail=message=>{s.last=message;return s;};
+  if(action==='start'){if(s.running)return fail('系统已启动。');s.running=true;return fail('D 启动 A/C，保持停止；等待实际数据与接口就绪。');}
+  if(!s.running)return fail('请先启动系统。');
+  switch(action){
+    case 'ready':s.devices=true;s.scan=true;s.remote=true;return fail('模拟 A 数据与执行接口就绪，遥控可用。仍等待新的指令。');
+    case 'mapping':case 'localization':
+      if(!s.devices||!s.scan)return fail('暂不能切换：设备或扫描未就绪。');
+      if(action==='localization'&&(!s.map||s.binding!==s.map))return fail('此场景的固定停靠位定位需要当前地图及有效绑定；请先保存地图并记录停靠位。');
+      s.pending=action;stop();return fail('D 请求停车；旧模式仍在运行，等待确认停稳后再切换。');
+    case 'stopped':
+      if(s.moving)return fail('仍有运动输出：请先发停止请求。');
+      s.stopConfirmed=true;
+      if(s.pending){s.mode=s.pending;s.pending=null;s.pose=false;return fail('模拟确认停稳，D 停旧模式并启动新模式；新模式尚未确认定位有效，等待新遥控指令。');}
+      return fail('模拟实际停稳；真实实现必须定义如何确认。');
+    case 'move':
+      if(!s.devices||!s.scan||!s.remote||!s.clear||s.pending){stop();return fail('C 拒绝运动：检查设备、扫描、遥控、当前方向空间或模式切换状态。');}
+      s.moving=true;s.stopConfirmed=false;s.fresh=true;return fail('新的遥控指令经过 C 保护交给 A；全局定位不是这条保护链的前提。');
+    case 'stop':stop();return fail('C 输出停止；仍需确认真实机身停稳。');
+    case 'scanLost':s.scan=false;stop();return fail('C 检测到扫描失效，输出停止并丢弃旧指令。');
+    case 'scanBack':s.scan=true;return fail('扫描恢复；不重放旧指令，等待新的遥控输入。');
+    case 'remoteLost':s.remote=false;stop();return fail('遥控中断：C 输出停止，旧指令失效。');
+    case 'remoteBack':s.remote=true;return fail('遥控恢复；不重放旧指令。');
+    case 'blocked':s.clear=false;stop();return fail('当前请求方向不可通行，C 限制该方向运动；不推定转身或退开安全。');
+    case 'clear':s.clear=true;return fail('模拟确认当前方向空间足够；仍需新的运动指令。');
+    case 'poseGood':if(s.mode==='none')return fail('尚未启动 B 的建图或定位模式。');s.pose=true;return fail('模拟 B 判定全局位姿有效；真实判据待设计。');
+    case 'poseBad':s.pose=false;return fail('B 报告定位不可用；C 仍按扫描和遥控状态保护运动。');
+    case 'save':if(s.mode!=='mapping')return fail('仅建图模式允许替换当前地图。');s.map++;s.binding=0;return fail('模拟 B 完整保存并替换地图成功，旧停靠位绑定失效。未写入任何文件。');
+    case 'saveFail':return fail('模拟地图保存失败：原地图和原绑定保持不变。');
+    case 'bind':if(!s.map||!s.pose||!s.stopConfirmed||s.moving)return fail('拒绝记录：需要当前地图、有效位姿及已确认停稳。');s.binding=s.map;return fail('模拟已人工对齐停靠位，B 将有效位姿绑定当前地图。');
+  }
+  return s;
+}
+</script>
+<script>
+const labels={start:'启动 A/C 与 D',ready:'模拟设备与输入就绪',mapping:'请求建图模式',localization:'请求定位模式',stopped:'模拟确认停稳',move:'发送新的运动指令',stop:'请求停止',scanLost:'扫描失效',scanBack:'扫描恢复',remoteLost:'遥控中断',remoteBack:'遥控恢复',blocked:'当前方向有障碍',clear:'确认当前方向可通行',poseGood:'模拟位姿有效',poseBad:'模拟定位失效',save:'模拟地图保存成功',saveFail:'模拟地图保存失败',bind:'记录停靠位绑定'};
+const scenarios=[
+ {name:'启动与运动通路',intro:'看 A 的输入、C 的保护与 B 的全局定位如何分开。先试图运动，再使设备就绪。',steps:['start','move','ready','mapping','stopped','move']},
+ {name:'故障恢复不重放',intro:'扫描失效会停止输出；恢复扫描不会恢复旧指令。遥控断连同理。',steps:['start','ready','move','scanLost','scanBack','move','remoteLost','remoteBack','move']},
+ {name:'定位失效仍可保护遥控',intro:'B 的全局定位失效，不使 C 的实时保护失效。障碍仍可限制运动。',steps:['start','ready','mapping','stopped','poseGood','move','poseBad','blocked','move','clear','move']},
+ {name:'模式互斥与地图绑定',intro:'保存并绑定地图后才能演示固定停靠位定位。切换必须先停车；定位模式不能替换地图。',steps:['start','ready','mapping','stopped','poseGood','save','bind','move','localization','stopped','save','poseGood']},
+ {name:'新地图使旧绑定失效',intro:'保存失败保留原地图；替换成功使旧绑定失效。无效位姿不能记录为启动位置。',steps:['start','ready','mapping','stopped','poseGood','save','bind','saveFail','save','localization','poseBad','bind']}
+];
+let state=initial(), selected=0, step=0;
+function dispatch(action){state=transition(state,action);render();}
+function render(){
+ const mode={none:'未启动 B 模式',mapping:'建图',localization:'定位'};
+ const values=[['系统',state.running?'运行':'未启动'],['A 设备与执行接口',state.devices?'模拟就绪':'未就绪'],['扫描 / 遥控',`${state.scan?'有效':'失效'} / ${state.remote?'可用':'中断'}`],['当前请求方向',state.clear?'模拟可通行':'受限'],['B 当前模式',mode[state.mode]],['待切换模式',state.pending?mode[state.pending]:'无'],['B 全局位姿',state.pose?'模拟有效':'不可用'],['C → A 运动输出',state.moving?'非零运动请求':'停止'],['新指令状态',state.fresh?'已接受新指令':'等待新指令'],['实际停稳确认',state.stopConfirmed?'模拟已停稳':'尚未确认'],['当前地图',state.map?`版本 ${state.map}`:'无'],['停靠位绑定',state.binding?`地图版本 ${state.binding}`:'无 / 已失效']];
+ document.getElementById('state').innerHTML=values.map(([k,v])=>`<div class="field"><small>${k}</small><strong>${v}</strong></div>`).join('');
+ document.getElementById('event').textContent=state.last;
+ document.querySelectorAll('#tabs button').forEach((button,i)=>button.setAttribute('aria-selected',String(i===selected)));
+ const scenario=scenarios[selected], panel=document.getElementById('walkthrough');panel.replaceChildren();
+ const intro=document.createElement('p');intro.textContent=scenario.intro;panel.append(intro);
+ scenario.steps.forEach((action,i)=>{const button=document.createElement('button');button.textContent=`${i+1}. ${labels[action]}${i<step?' ✓':''}`;button.disabled=i!==step;button.className=i===step?'primary':'';button.onclick=()=>{step++;dispatch(action);};panel.append(button);});
+ if(step===scenario.steps.length){const done=document.createElement('p');done.textContent='场景完成。可继续自由操作，或点击标签重新演练。';panel.append(done);}
+}
+Object.entries(labels).forEach(([action,label])=>{const button=document.createElement('button');button.textContent=label;button.onclick=()=>dispatch(action);document.getElementById('actions').append(button);});
+scenarios.forEach((scenario,i)=>{const button=document.createElement('button');button.textContent=scenario.name;button.setAttribute('role','tab');button.onclick=()=>{selected=i;step=0;state=initial();render();};document.getElementById('tabs').append(button);});
+document.getElementById('reset').onclick=()=>{state=initial();step=0;render();};render();
+</script>
+</html>
