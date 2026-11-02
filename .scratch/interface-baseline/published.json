@@ -1,0 +1,61 @@
+{
+  "map": {
+    "url": "https://github.com/Boon-Zhu/slam/issues/2",
+    "number": 2,
+    "title": "Wayfinder map：模块可独立细化方案的共同基线"
+  },
+  "decision": {
+    "url": "https://github.com/Boon-Zhu/slam/issues/3",
+    "number": 3,
+    "title": "共同基线决议：版本、模块职责、故障语义与工程约束"
+  },
+  "linked": true,
+  "resolved": true,
+  "decision_closed": true,
+  "a-data": {
+    "url": "https://github.com/Boon-Zhu/slam/issues/4",
+    "number": 4,
+    "title": "A：核实设备数据并完成首次全量采集方案"
+  },
+  "a-motion": {
+    "url": "https://github.com/Boon-Zhu/slam/issues/5",
+    "number": 5,
+    "title": "A：核实停止、踏步与 A 失效时的原装断电能力"
+  },
+  "b-mapping": {
+    "url": "https://github.com/Boon-Zhu/slam/issues/6",
+    "number": 6,
+    "title": "B：选择快速验证版运动估计与建图组件"
+  },
+  "b-save": {
+    "url": "https://github.com/Boon-Zhu/slam/issues/7",
+    "number": 7,
+    "title": "B：细化单地图完整保存及 D 调用契约"
+  },
+  "c-protection": {
+    "url": "https://github.com/Boon-Zhu/slam/issues/8",
+    "number": 8,
+    "title": "C：细化持续操作、障碍限制与故障响应方案"
+  },
+  "d-ui": {
+    "url": "https://github.com/Boon-Zhu/slam/issues/9",
+    "number": 9,
+    "title": "D：细化用户入口、状态反馈与试运行日志核对"
+  },
+  "d-env": {
+    "url": "https://github.com/Boon-Zhu/slam/issues/10",
+    "number": 10,
+    "title": "D：落实机器人环境与开发 CI 最小试运行方案"
+  },
+  "delivery": {
+    "url": "https://github.com/Boon-Zhu/slam/issues/11",
+    "number": 11,
+    "title": "交付版：细化定位、多地图与完整故障验收范围"
+  },
+  "schedule": {
+    "url": "https://github.com/Boon-Zhu/slam/issues/12",
+    "number": 12,
+    "title": "D：记录团队讨论后的集成日期与里程碑安排"
+  },
+  "map_closed": true
+}

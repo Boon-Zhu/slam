@@ -1,0 +1,56 @@
+[
+  {
+    "key": "a-data",
+    "title": "A：核实设备数据并完成首次全量采集方案",
+    "owner": "ZWC-Maker",
+    "file": ".scratch/interface-baseline/issues/01-a-data.md"
+  },
+  {
+    "key": "a-motion",
+    "title": "A：核实停止、踏步与 A 失效时的原装断电能力",
+    "owner": "ZWC-Maker",
+    "file": ".scratch/interface-baseline/issues/02-a-motion.md"
+  },
+  {
+    "key": "b-mapping",
+    "title": "B：选择快速验证版运动估计与建图组件",
+    "owner": "Boon-Zhu",
+    "file": ".scratch/interface-baseline/issues/03-b-mapping.md"
+  },
+  {
+    "key": "b-save",
+    "title": "B：细化单地图完整保存及 D 调用契约",
+    "owner": "Boon-Zhu",
+    "file": ".scratch/interface-baseline/issues/04-b-save.md"
+  },
+  {
+    "key": "c-protection",
+    "title": "C：细化持续操作、障碍限制与故障响应方案",
+    "owner": "NeuviFuri1115",
+    "file": ".scratch/interface-baseline/issues/05-c-protection.md"
+  },
+  {
+    "key": "d-ui",
+    "title": "D：细化用户入口、状态反馈与试运行日志核对",
+    "owner": "zer0-2w",
+    "file": ".scratch/interface-baseline/issues/06-d-ui.md"
+  },
+  {
+    "key": "d-env",
+    "title": "D：落实机器人环境与开发 CI 最小试运行方案",
+    "owner": "zer0-2w",
+    "file": ".scratch/interface-baseline/issues/07-d-env.md"
+  },
+  {
+    "key": "delivery",
+    "title": "交付版：细化定位、多地图与完整故障验收范围",
+    "owner": "zer0-2w",
+    "file": ".scratch/interface-baseline/issues/08-delivery.md"
+  },
+  {
+    "key": "schedule",
+    "title": "D：记录团队讨论后的集成日期与里程碑安排",
+    "owner": "zer0-2w",
+    "file": ".scratch/interface-baseline/issues/09-schedule.md"
+  }
+]
