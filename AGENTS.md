@@ -19,6 +19,7 @@
 
 ### 开发环境与常用操作
 
+- 为尚无 WSL2 的 Windows 开发者配置环境时，使用 [Windows 开发环境配置指南](docs/development/windows-setup.md)；既有设备沿用阶段决议中的方案，不根据新成员指南重装。
 - 统一开发目标基线为 Ubuntu 22.04 + ROS2 Humble，不要求宿主系统一致；设备分工与容器方案遵循阶段决议 §2。涉及环境、远程连接或 GitHub 操作时，先读取 `.local/environment.md`；缺失或记录不适用时检查本机，不套用其他设备状态。
 - 已授权的 Git 推送优先使用 SSH；先核对实际 push URL，本机 SSH 参数见本地记录，不自动改写永久 remote 或 SSH 配置。
 - 创建/更新 PR、查询 issue 和仓库状态优先使用 GitHub CLI（`gh`）；先核实账号及目标仓库。沙箱网络失败不等于凭据失效，应按权限流程重试确认。

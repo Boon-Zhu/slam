@@ -10,6 +10,7 @@ docs/
 ├── architecture/   # 跨模块架构与共同工程基线
 ├── adr/            # 有编号的单项架构决策及取舍理由
 ├── standards/      # 命名等工程规范
+├── development/    # 开发环境配置与日常开发指南
 ├── report/         # 调查、评估与实际检查记录
 └── agents/         # Agent 工作流程与协作约定
 ```
@@ -37,6 +38,12 @@ docs/
 | 文档 | 内容简介 |
 | --- | --- |
 | [naming-conventions.md](standards/naming-conventions.md) | 文件、目录、package、函数、私有方法、类型、配置与测试的命名规则及兼容例外。 |
+
+### development：开发指南
+
+| 文档 | 内容简介 |
+| --- | --- |
+| [windows-setup.md](development/windows-setup.md) | 面向全新 Windows 环境的 WSL2 Ubuntu 22.04、Humble、Python、GitHub CLI 与 SSH 安装、自检和使用指南。 |
 
 ### report：调查与评估
 

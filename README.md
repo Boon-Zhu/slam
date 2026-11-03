@@ -4,6 +4,8 @@
 
 文档目录与完整清单见[文档索引](docs/README.md)；文件、package 与代码标识符遵循[命名规范](docs/standards/naming-conventions.md)。
 
+新加入的 Windows 开发者从 [Windows 开发环境配置指南](docs/development/windows-setup.md)开始，安装 WSL2 Ubuntu 22.04、Humble 及协作工具并完成基础自检。
+
 本文记录当前已确认的需求、顶层架构及待讨论事项。共同基线已形成，下一步通过模块研究 issue 细化方案及接口。本文不代表已经实现或通过真机验证；候选软件仍未最终选型。
 
 实施分为**快速验证版**和**交付版**：前者跑通遥控、采集、建图与单地图保存，后者补齐独立定位、固定停靠位重启、多地图及约定范围的完整验证。共同技术栈、接口责任与决议详见[阶段决议](docs/architecture/interface-baseline-decisions.md)，本文件按版本标明适用范围。
