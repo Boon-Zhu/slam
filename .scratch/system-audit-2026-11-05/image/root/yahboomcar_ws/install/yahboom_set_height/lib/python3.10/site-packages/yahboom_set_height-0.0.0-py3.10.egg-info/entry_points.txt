@@ -1,0 +1,3 @@
+[console_scripts]
+yahboom_set_height = yahboom_set_height.yahboom_set_height:main
+

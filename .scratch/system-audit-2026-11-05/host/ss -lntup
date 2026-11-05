@@ -1,0 +1,17 @@
+Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                              
+udp   UNCONN 0      0            0.0.0.0:631        0.0.0.0:*                                        
+udp   UNCONN 0      0            0.0.0.0:5353       0.0.0.0:*                                        
+udp   UNCONN 0      0            0.0.0.0:53071      0.0.0.0:*                                        
+udp   UNCONN 0      0       192.168.8.88:53         0.0.0.0:*                                        
+udp   UNCONN 0      0            0.0.0.0:67         0.0.0.0:*                                        
+udp   UNCONN 0      0                  *:5353             *:*                                        
+udp   UNCONN 0      0                  *:40864            *:*                                        
+tcp   LISTEN 0      32      192.168.8.88:53         0.0.0.0:*                                        
+tcp   LISTEN 0      128          0.0.0.0:8888       0.0.0.0:*    users:(("jupyter-lab",pid=930,fd=8))
+tcp   LISTEN 0      128        127.0.0.1:631        0.0.0.0:*                                        
+tcp   LISTEN 0      128          0.0.0.0:6500       0.0.0.0:*    users:(("python3",pid=1399,fd=14))  
+tcp   LISTEN 0      128          0.0.0.0:22         0.0.0.0:*                                        
+tcp   LISTEN 0      1       192.168.8.88:6000       0.0.0.0:*    users:(("python3",pid=1399,fd=10))  
+tcp   LISTEN 0      16                 *:5900             *:*                                        
+tcp   LISTEN 0      128            [::1]:631           [::]:*                                        
+tcp   LISTEN 0      128             [::]:22            [::]:*                                        

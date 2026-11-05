@@ -1,0 +1,10 @@
+[console_scripts]
+follow_line = voice_xgo_ctrl_run.follow_line:main
+voice_follow_line = voice_xgo_ctrl_run.voice_xgo_follow_line:main
+voice_xgo_cmd_re = voice_xgo_ctrl_run.voice_xgo_cmd_re:main
+voice_xgo_ctrl_action = voice_xgo_ctrl_run.voice_xgo_ctrl_action:main
+voice_xgo_ctrl_color_identify = voice_xgo_ctrl_run.voice_xgo_ctrl_color_identify:main
+voice_xgo_ctrl_mult_goal = voice_xgo_ctrl_run.voice_xgo_ctrl_mutl_goal:main
+voice_xgo_ctrl_mutl_goal_identify = voice_xgo_ctrl_run.voice_xgo_ctrl_mutl_goal_identify:main
+voice_xgo_ctrl_run = voice_xgo_ctrl_run.voice_xgo_ctrl_run:main
+

@@ -1,0 +1,9 @@
+setup.py
+image_color_lab/__init__.py
+image_color_lab.egg-info/PKG-INFO
+image_color_lab.egg-info/SOURCES.txt
+image_color_lab.egg-info/dependency_links.txt
+image_color_lab.egg-info/top_level.txt
+image_color_lab/msg/__init__.py
+image_color_lab/msg/_lab.py
+image_color_lab/msg/_string_stamped.py

@@ -1,0 +1,3 @@
+[console_scripts]
+yahboomcar_joint_state = yahboom_dog_joint_state.yahboomcar_joint_state:main
+

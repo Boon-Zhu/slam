@@ -49,7 +49,9 @@ docs/
 
 | 文档 | 内容简介 |
 | --- | --- |
-| [pi5-image-version-audit-2026-11-02.md](report/pi5-image-version-audit-2026-11-02.md) | 2026-11-02 实际读取的 Pi 5 宿主、厂商 Humble 容器及软件版本；不代表运动或组件运行已验证。 |
+| [dogzilla-system-audit-2026-11-05.md](report/dogzilla-system-audit-2026-11-05.md) | 实机系统分层、开机服务、28 个厂商包及依赖、A/B/C/D 接入边界；MS200 数据实测与退出异常。 |
+| [dogzilla-interface-audit-2026-11-05.md](report/dogzilla-interface-audit-2026-11-05.md) | 雷达、运动、IMU、关节和 TF 的源码接口、单位、时间、QoS、失败语义与证据哈希。 |
+| [pi5-image-version-audit-2026-11-02.md](report/pi5-image-version-audit-2026-11-02.md) | Pi 5 宿主与厂商 Humble 镜像版本；补充 SSH 登录、无线连接检查、2026-11-05 一次短时前进与正常停止实测，以及断线和未验证范围。 |
 | [upstream-policy-assessment.md](report/upstream-policy-assessment.md) | 未修改上游策略的工作量汇总、估算前提和扩大替换范围的边界。 |
 | [upstream-policy-device.md](report/upstream-policy-device.md) | A 设备接入与运动适配的上游复用、自研替代成本及待验证项。 |
 | [upstream-policy-mapping.md](report/upstream-policy-mapping.md) | B 运动估计、建图与地图业务的复用范围、可行性与工作量。 |

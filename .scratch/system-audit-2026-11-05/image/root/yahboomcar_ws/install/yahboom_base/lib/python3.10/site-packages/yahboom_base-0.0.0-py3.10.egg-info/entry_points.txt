@@ -1,0 +1,4 @@
+[console_scripts]
+base = yahboom_base.base:main
+talker = yahboom_base.publisher_member_function:main
+

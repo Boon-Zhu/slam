@@ -1,0 +1,10 @@
+{"samples": 119, "elapsed_samples_s": 11.769240288999981, "hz": 10.026135681016529, "first": {"frame": "laser_frame", "stamp": [1793803363, 395478879], "points": 450, "intensities": 450, "angle_min": 0.011519237421452999, "angle_max": 6.279694557189941, "angle_increment": 0.013929278589785099, "scan_time": 0.015874862670898438, "time_increment": 3.5277473216410726e-05, "range_min": 0.05000000074505806, "range_max": 20.0, "valid": 438, "zero": 8, "nan": 4, "nearest_m": 0.17000000178813934, "furthest_m": 3.984999895095825}, "publishers": [{"node": "oradar_ros", "type": "sensor_msgs/msg/LaserScan", "qos": "QoSProfile(history=HistoryPolicy.UNKNOWN, depth=0, reliability=ReliabilityPolicy.RELIABLE, durability=DurabilityPolicy.VOLATILE, lifespan=Infinite, deadline=Infinite, liveliness=LivelinessPolicy.AUTOMATIC, liveliness_lease_duration=Infinite, avoid_ros_namespace_conventions=False)"}]}
+DRIVER_EXIT -6 
+get lidar type:MS200
+get serial port:/dev/ttyAMA1, baudrate:230400
+lidar device connect succuss.
+get lidar scan data
+ROS topic:/scan
+[INFO] [1793803375.181682779] [rclcpp]: signal_handler(signum=2)
+*** buffer overflow detected ***: terminated
+

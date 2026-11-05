@@ -1,0 +1,6 @@
+                     USER        PID ACCESS COMMAND
+/dev/ttyAMA0:        pi         1399 F.... python3
+                     pi         1891 F.... python3
+/dev/video0:         pi         1094 F.... pipewire
+                     pi         1095 F.... wireplumber
+                     pi         1399 F...m python3

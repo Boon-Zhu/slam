@@ -1,0 +1,4 @@
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eth0             DOWN           
+wlan0            UP             192.168.8.88/24 fe80::8aa2:9eff:fe55:f5d2/64 
+docker0          DOWN           172.17.0.1/16 

@@ -1,0 +1,17 @@
+package.xml
+setup.cfg
+setup.py
+../../build/yahboom_gait/yahboom_gait.egg-info/PKG-INFO
+../../build/yahboom_gait/yahboom_gait.egg-info/SOURCES.txt
+../../build/yahboom_gait/yahboom_gait.egg-info/dependency_links.txt
+../../build/yahboom_gait/yahboom_gait.egg-info/entry_points.txt
+../../build/yahboom_gait/yahboom_gait.egg-info/requires.txt
+../../build/yahboom_gait/yahboom_gait.egg-info/top_level.txt
+../../build/yahboom_gait/yahboom_gait.egg-info/zip-safe
+launch/yahboomGaitLaunch.launch.py
+resource/yahboom_gait
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py
+yahboom_gait/__init__.py
+yahboom_gait/yahboom_gait.py
