@@ -1,6 +1,6 @@
 # Windows 开发环境配置指南
 
-更新日期：2026-11-03。面向尚未安装 WSL2 的 Windows 开发者。
+更新日期：2026-11-06。面向尚未安装 WSL2 的 Windows 开发者。
 
 本文提供基础环境安装与自检步骤，依据[阶段决议](../architecture/interface-baseline-decisions.md)和官方安装文档编写；尚未在一台全新 Windows 电脑上逐步实测。执行时逐节确认结果，失败后先排查，不继续叠加安装。
 
@@ -18,7 +18,13 @@
 | 构建与依赖 | colcon、rosdep；实际项目依赖与构建入口以仓库后续配置为准 |
 | GitHub CLI | 在 WSL 安装官方稳定版 `gh`，用本人账号登录并获得仓库访问权限 |
 | SSH | 在 WSL 使用 OpenSSH 客户端和个人密钥；GitHub 认证与机器人登录分别验证 |
-| Python 检查工具 | 已选 Ruff、mypy、pytest；固定版本和项目检查配置待落实，不在此预设版本 |
+| Python 检查工具 | 固定 **Ruff 0.17.4、mypy 2.4.1、pytest 8.4.2**，目标 Python 3.10；项目检查范围、类型边界及 CI 配置仍待落实 |
+
+上述工具版本于 2026-11-06 在 Ubuntu 22.04.5 / Python 3.10.12 / ROS2 Humble 开发容器中验证：Ruff 格式与 lint、纯 Python 的 mypy 检查、rosdep 依赖检查及最小 `ament_python` 包构建通过；pytest 直接执行及经 colcon 执行均通过纯逻辑、ROS 消息收发、launch 进程测试，共 3 项。这不代表本指南已在全新 Windows 环境完整验证，也不代表项目业务包或机器人通过验收。
+
+工具使用基于系统 Python 3.10、带 `--system-site-packages` 的 venv，ROS 测试保留 Humble 环境设置，使系统 ROS 依赖可见；不覆盖系统自带的 pytest。执行 colcon 测试时须显式使用该 venv 的 `python -m colcon test`，直接运行系统 `colcon` 不会自动选用 venv 中的 pytest。此前 pytest 9.2.0 在当前 Humble `launch_testing` 插件加载阶段发生 hook 接口冲突，因此固定为已通过最小验证的 8.4.2。
+
+当前 Humble 的 `rclpy`、`std_msgs` 未提供 mypy 可用的完整类型声明，直接检查其导入会报告 `import-untyped`。这不影响已经验证的 ROS 运行与测试，但 ROS 接口的静态类型检查仍需配置类型边界；不能将纯 Python 检查通过视为 ROS 接口已获得完整类型检查。
 
 此指南不改变现有设备分工：电脑 1 保留 WSL2 Ubuntu 26.04，计划用 22.04/Humble 容器开发；电脑 2 按阶段决议使用原生 Ubuntu 22.04。新成员无需复制电脑 1 的历史 SSH 绕行参数。
 
