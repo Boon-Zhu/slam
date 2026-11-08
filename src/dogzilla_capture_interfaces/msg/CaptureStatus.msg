@@ -1,0 +1,11 @@
+string session_id
+string state
+string current_request_id
+bool enable_motion
+uint64 feedback_count
+uint64 invalid_feedback_count
+bool feedback_paused
+uint64 backpressure_count
+string last_error
+int64 wall_ns
+uint64 mono_ns

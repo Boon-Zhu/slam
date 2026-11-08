@@ -1,0 +1,7 @@
+string session_id
+string request_id
+---
+# Accepted only acknowledges the request. Observe events for actual write result.
+bool accepted
+string reason
+string request_id
