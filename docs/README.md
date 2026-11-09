@@ -51,6 +51,7 @@ docs/
 | 文档 | 内容简介 |
 | --- | --- |
 | [device-capture-entry-acceptance-2026-11-08.md](report/device-capture-entry-acceptance-2026-11-08.md) | ROS 入口实现与独立审查闭环，Humble 构建、80 项测试及模拟 bag 录制回放验收；真机部署仍待验证。 |
+| [device-capture-readonly-verification-2026-11-09.md](report/device-capture-readonly-verification-2026-11-09.md) | ROS 入口 arm64 构建与真机只读反馈、部署权限修正、实际频率、串口排他及退出释放验证；未运动或正式全量采集。 |
 | [device-first-capture-verification-2026-11-08.md](report/device-first-capture-verification-2026-11-08.md) | 首次采集方案实机复核：IMU/关节/电池有效返回、相机去盖复查、雷达退出异常、磁盘/时钟及资源交接。 |
 | [device-first-capture-investigation-2026-11-06.md](report/device-first-capture-investigation-2026-11-06.md) | issue #4 首次全量采集前置调查：实机资源与录包工具、APP 数据覆盖缺口、方案决策与试采门槛。 |
 | [pstack-assessment-2026-11-06.md](report/pstack-assessment-2026-11-06.md) | pstack 官方工作流、宿主依赖、与现有协作规范的冲突，以及有限自动编码试点建议；未安装或运行。 |

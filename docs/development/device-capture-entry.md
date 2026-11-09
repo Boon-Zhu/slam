@@ -25,14 +25,15 @@ ros2 launch dogzilla_device_capture capture.launch.py backend:=mock
 
 1. 核对当前设备、现场姿态、供电和操作者。正式录制前按方案完成扩容与校时；本组件不会代为修改磁盘、系统时钟或网络。
 2. 检查 `ss -tnp` 中 APP TCP 6000 是否有活动操作者；核对 APP 进程完整命令。临时停止 `yahboom_oled.service`，只终止已经核对的 APP Python 进程；保留开机配置。不要使用宽泛的 `pkill python`。
-3. 用 `sudo fuser -v /dev/ttyAMA0` 确认无持有者。不要同时启动原装 `yahboom_base`、`yahboom_dog_joint_state` 或 OLED。
+3. 核对控制串口无持有者。`sudo fuser -v /dev/ttyAMA0` 仅作辅助：本机实测它可能漏报容器内的持有者，需同时在宿主 PID namespace 按字符设备 `st_rdev` 扫描 `/proc/<pid>/fd`，确认扫描无权限错误。入口工厂也执行该检查；不要同时启动原装 `yahboom_base`、`yahboom_dog_joint_state` 或 OLED。
 4. 用机器人 arm64 环境构建本项目 overlay。电脑 amd64 构建产物不能直接复制到机器人运行。
 
 真实入口要求宿主 PID namespace，以便检查全部设备持有者，并使用共享锁文件避免多个采集容器同时启动。下例假定项目及机器人构建产物已放在 `/home/pi/slam-capture`，只启动只读入口：
 
 ```bash
 sudo docker run --detach --name dogzilla-capture --init \
-  --network none --pid host --cap-drop ALL --cap-add SYS_PTRACE \
+  --network none --pid host --cap-drop ALL \
+  --cap-add SYS_PTRACE --cap-add DAC_READ_SEARCH \
   --security-opt no-new-privileges --read-only --tmpfs /tmp \
   --device /dev/ttyAMA0:/dev/ttyAMA0 \
   --mount type=bind,source=/run/lock,target=/run/lock \
@@ -43,7 +44,7 @@ sudo docker run --detach --name dogzilla-capture --init \
   'source /opt/ros/humble/setup.bash; source /workspace/slam/install/setup.bash; exec /workspace/slam/install/dogzilla_device_capture/lib/dogzilla_device_capture/capture_node'
 ```
 
-节点以 detached 容器运行，SSH 或 CLI 断开不会连带结束节点。容器直接 exec 已安装的节点脚本，让 SIGTERM 经 init 转发到节点，不依赖外层 `ros2 run` 进程转发信号。该命令没有数据集持久目录挂载，也没有运行 recorder；完整录制环境另行准备。容器要求能检查 `/proc` 的进程 fd；检查权限不足时入口报告 FAULT，不跳过检查。工厂在硬件线程中创建唯一库对象，检查实际实现源码 SHA-256 为 `3d05141c71b1066e2274cb0d842bd45b328c6d57a9032b7484494433b185585d`，再设置串口排他访问。哈希不匹配需要重新调查版本，不能任意改成当前哈希绕过。
+节点以 detached 容器运行，SSH 或 CLI 断开不会连带结束节点。容器直接 exec 已安装的节点脚本，让 SIGTERM 经 init 转发到节点，不依赖外层 `ros2 run` 进程转发信号。该命令没有数据集持久目录挂载，也没有运行 recorder；完整录制环境另行准备。容器要求能检查 `/proc` 的进程 fd；检查权限不足时入口报告 FAULT，不跳过检查。2026-11-09 真机验证确认：只有 `SYS_PTRACE` 仍不能遍历其他 UID 的 fd 目录，需补充 `DAC_READ_SEARCH` 读取权限；无需 `--privileged`。工厂在硬件线程中创建唯一库对象，检查实际实现源码 SHA-256 为 `3d05141c71b1066e2274cb0d842bd45b328c6d57a9032b7484494433b185585d`，再设置串口排他访问。哈希不匹配需要重新调查版本，不能任意改成当前哈希绕过。
 
 计划进行实际运动时，结束只读入口并在完成现场核对后，以 `--ros-args -p enable_motion:=true` 显式重新启动。新进程会产生新会话 ID，不重放旧请求。复用容器名之前先保存旧容器日志并显式移除已经停止的容器。程序不会自动重启 APP/OLED；厂商 APP 启动可能带动作副作用。
 
@@ -127,3 +128,5 @@ ros2 bag play /data/capture-session --clock
 不要在回放环境启动真实控制入口；反馈和事件本身不驱动运动服务。消费者按项目约定使用回放时间。若需核对每条历史 status，订阅队列要足够大；默认只保留最新状态的深度 1 不能用于完整历史计数审计。
 
 包内测试覆盖纯 CLI 参数、真实 rclpy 服务/反馈/晚加入 metadata、发布阻塞时停止受理、退出停止失败证据、安装后 CLI 子进程，以及 mock 数据的真实 rosbag record→关闭→读取→play→逐话题订阅数量/内容核对。测试不访问机器狗。测试通过不替代机器人上的容器构建、只读接管、实际运动/停车以及首次完整静止录制验收；执行结果以本次验收报告为准。
+
+2026-11-09 已另行完成机器人 arm64 构建、真实反馈只读接入、共享锁/串口排他访问及关闭释放检查，见[真机只读验证报告](../report/device-capture-readonly-verification-2026-11-09.md)。该轮未执行运动、雷达/相机并行采集或正式 rosbag 录制；正式采集仍须补齐持久化与完整录制验证。
