@@ -1,0 +1,120 @@
+{
+  "synthetic": false,
+  "namespace": "/capture/device",
+  "timeout_s": 60,
+  "minimum_free_bytes": 1073741824,
+  "sources": [
+    {
+      "topic": "/capture/device/feedback",
+      "type": "dogzilla_capture_interfaces/msg/Feedback",
+      "stale_after_sec": 5,
+      "latched": false,
+      "require_message": true
+    },
+    {
+      "topic": "/capture/device/status",
+      "type": "dogzilla_capture_interfaces/msg/CaptureStatus",
+      "stale_after_sec": 5,
+      "latched": true,
+      "require_message": true
+    },
+    {
+      "topic": "/capture/device/metadata",
+      "type": "dogzilla_capture_interfaces/msg/CaptureMetadata",
+      "stale_after_sec": 5,
+      "latched": true,
+      "require_message": true
+    },
+    {
+      "topic": "/capture/device/events",
+      "type": "dogzilla_capture_interfaces/msg/CaptureEvent",
+      "stale_after_sec": 5,
+      "latched": false,
+      "require_message": false
+    },
+    {
+      "topic": "/scan",
+      "type": "sensor_msgs/msg/LaserScan",
+      "stale_after_sec": 5
+    },
+    {
+      "topic": "/camera/image_raw",
+      "type": "sensor_msgs/msg/Image",
+      "stale_after_sec": 5
+    }
+  ],
+  "devices": [
+    "/dev/ttyAMA0",
+    "/dev/ttyAMA1",
+    "/dev/video0"
+  ],
+  "drivers": [
+    {
+      "name": "entry",
+      "command": [
+        "ros2",
+        "run",
+        "dogzilla_device_capture",
+        "capture_node",
+        "--ros-args",
+        "--params-file",
+        "FILL_CAPTURE_YAML",
+        "-p",
+        "enable_motion:={motion}"
+      ]
+    },
+    {
+      "name": "lidar",
+      "command": [
+        "ros2",
+        "launch",
+        "oradar_lidar",
+        "ms200_scan.launch.py"
+      ]
+    },
+    {
+      "name": "camera",
+      "command": [
+        "ros2",
+        "run",
+        "usb_cam",
+        "usb_cam_node_exe",
+        "--ros-args",
+        "--params-file",
+        "FILL_VERIFIED_CAMERA_YAML"
+      ]
+    }
+  ],
+  "clock": {
+    "sync_command": [
+      "python3",
+      "-m",
+      "dogzilla_device_capture.round_preflight",
+      "clock-sync"
+    ],
+    "verify_command": [
+      "python3",
+      "-m",
+      "dogzilla_device_capture.round_preflight",
+      "clock-check"
+    ],
+    "max_offset_s": null
+  },
+  "deployment": {
+    "expected_files": {},
+    "expected_image": "FILL_ACTUAL_IMAGE_DIGEST",
+    "environment_command": [
+      "python3",
+      "-m",
+      "dogzilla_device_capture.round_preflight",
+      "environment",
+      "--image-evidence",
+      "/run/capture-image-id",
+      "--package",
+      "ros-humble-rosbag2-py",
+      "--package",
+      "ros-humble-usb-cam"
+    ]
+  },
+  "configuration_note": "模板不可直接通过prepare：max_offset_s、哈希、镜像、相机参数、资源与容量预算须按现场部署核实。雷达launch来自既有源码证据，相机executable与参数仍须核对实际版本。"
+}

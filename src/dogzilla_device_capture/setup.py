@@ -11,8 +11,15 @@ setup(
     data_files=[
         ("share/ament_index/resource_index/packages", ["resource/" + PACKAGE]),
         ("share/" + PACKAGE, ["package.xml"]),
+        (
+            "share/" + PACKAGE + "/docs",
+            [
+                "../../docs/development/device-capture-round.md",
+                "../../docs/development/device-capture-entry.md",
+            ],
+        ),
         ("share/" + PACKAGE + "/launch", glob("launch/*.launch.py")),
-        ("share/" + PACKAGE + "/config", glob("config/*.yaml")),
+        ("share/" + PACKAGE + "/config", glob("config/*.yaml") + glob("config/*.json")),
     ],
     install_requires=["setuptools"],
     zip_safe=True,
@@ -25,6 +32,8 @@ setup(
         "console_scripts": [
             "capture_node = dogzilla_device_capture.node:main",
             "capturectl = dogzilla_device_capture.cli:main",
+            "capture-round = dogzilla_device_capture.round_session:main",
+            "capture-round-archive = dogzilla_device_capture.archive:main",
         ]
     },
 )

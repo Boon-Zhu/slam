@@ -44,12 +44,15 @@ docs/
 | 文档 | 内容简介 |
 | --- | --- |
 | [windows-setup.md](development/windows-setup.md) | 面向全新 Windows 环境的 WSL2 Ubuntu 22.04、Humble、Python、GitHub CLI 与 SSH 安装、自检和使用指南。 |
+| [device-capture-round.md](development/device-capture-round.md) | 分步采集、后台监管、真实收录回执、来源缺失、每轮导出/哈希/实际回放与显式清理；区分合成测试与真机待验证项。 |
 | [device-capture-entry.md](development/device-capture-entry.md) | 首次采集 ROS 控制与反馈入口的构建、mock、真机接管前提、命令、原始反馈及关闭审计语义。 |
 
 ### report：调查与评估
 
 | 文档 | 内容简介 |
 | --- | --- |
+| [device-capture-round-acceptance-2026-11-09.md](report/device-capture-round-acceptance-2026-11-09.md) | 分步采集工具本地软件验收，Humble 127项测试、正常/异常合成轮次、导出回放与明确真机边界；独立代码审查留下一轮。 |
+| [device-capture-round-review-fixes-2026-11-09.md](report/device-capture-round-review-fixes-2026-11-09.md) | 后续代码审查的两项 P1、两项 P2 修复与回归证据，以及用户决定暂缓的 P3 持久化逻辑重复问题。 |
 | [device-capture-entry-acceptance-2026-11-08.md](report/device-capture-entry-acceptance-2026-11-08.md) | ROS 入口实现与独立审查闭环，Humble 构建、80 项测试及模拟 bag 录制回放验收；真机部署仍待验证。 |
 | [device-capture-readonly-verification-2026-11-09.md](report/device-capture-readonly-verification-2026-11-09.md) | ROS 入口 arm64 构建与真机只读反馈、部署权限修正、实际频率、串口排他及退出释放验证；未运动或正式全量采集。 |
 | [device-first-capture-verification-2026-11-08.md](report/device-first-capture-verification-2026-11-08.md) | 首次采集方案实机复核：IMU/关节/电池有效返回、相机去盖复查、雷达退出异常、磁盘/时钟及资源交接。 |

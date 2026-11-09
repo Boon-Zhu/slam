@@ -12,4 +12,5 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/Stop.srv"
 )
 ament_export_dependencies(rosidl_default_runtime)
+install(FILES CMakeLists.txt DESTINATION share/${PROJECT_NAME})
 ament_package()
