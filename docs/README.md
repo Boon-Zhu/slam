@@ -51,6 +51,7 @@ docs/
 
 | 文档 | 内容简介 |
 | --- | --- |
+| [device-first-stationary-capture-2026-11-10.md](report/device-first-stationary-capture-2026-11-10.md) | SD 卡在线扩容、真实校时、首次联合静止录制及导出回放证据；记录收录间隔、图像缺帧和驱动退出异常，静止验收未通过。 |
 | [device-capture-round-acceptance-2026-11-09.md](report/device-capture-round-acceptance-2026-11-09.md) | 分步采集工具本地软件验收，Humble 127项测试、正常/异常合成轮次、导出回放与明确真机边界；独立代码审查留下一轮。 |
 | [device-capture-round-review-fixes-2026-11-09.md](report/device-capture-round-review-fixes-2026-11-09.md) | 后续代码审查的两项 P1、两项 P2 修复与回归证据，以及用户决定暂缓的 P3 持久化逻辑重复问题。 |
 | [device-capture-entry-acceptance-2026-11-08.md](report/device-capture-entry-acceptance-2026-11-08.md) | ROS 入口实现与独立审查闭环，Humble 构建、80 项测试及模拟 bag 录制回放验收；真机部署仍待验证。 |
