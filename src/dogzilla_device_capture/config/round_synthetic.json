@@ -1,0 +1,70 @@
+{
+  "synthetic": true,
+  "namespace": "/capture/device",
+  "timeout_s": 12,
+  "minimum_free_bytes": 10485760,
+  "sources": [
+    {
+      "topic": "/capture/device/feedback",
+      "type": "dogzilla_capture_interfaces/msg/Feedback",
+      "stale_after_sec": 5,
+      "latched": false,
+      "require_message": true
+    },
+    {
+      "topic": "/capture/device/status",
+      "type": "dogzilla_capture_interfaces/msg/CaptureStatus",
+      "stale_after_sec": 5,
+      "latched": true,
+      "require_message": true
+    },
+    {
+      "topic": "/capture/device/metadata",
+      "type": "dogzilla_capture_interfaces/msg/CaptureMetadata",
+      "stale_after_sec": 5,
+      "latched": true,
+      "require_message": true
+    },
+    {
+      "topic": "/capture/device/events",
+      "type": "dogzilla_capture_interfaces/msg/CaptureEvent",
+      "stale_after_sec": 5,
+      "latched": false,
+      "require_message": false
+    },
+    {
+      "topic": "/scan",
+      "type": "sensor_msgs/msg/LaserScan",
+      "stale_after_sec": 5
+    },
+    {
+      "topic": "/camera/image_raw",
+      "type": "sensor_msgs/msg/Image",
+      "stale_after_sec": 5
+    }
+  ],
+  "devices": [],
+  "drivers": [
+    {
+      "name": "entry",
+      "command": [
+        "{python}",
+        "-m",
+        "dogzilla_device_capture.node",
+        "--ros-args",
+        "-p",
+        "backend:=mock",
+        "-p",
+        "enable_motion:={motion}"
+      ]
+    },
+    {
+      "name": "synthetic_sources",
+      "command": [
+        "{python}",
+        "-m",
+        "dogzilla_device_capture.synthetic_sources"
+      ]
+    }
+  ]
+}

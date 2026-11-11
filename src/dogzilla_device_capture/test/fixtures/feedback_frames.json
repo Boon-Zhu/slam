@@ -1,0 +1,53 @@
+{
+  "read_battery": {
+    "frame_hex": "550009120123c000aa",
+    "vendor_value": 35
+  },
+  "read_version": {
+    "frame_hex": "55001212074d2d342e302e312d5900e300aa",
+    "vendor_value": "4.0.1-Y"
+  },
+  "read_motor": {
+    "frame_hex": "5500171250a3af83a2b083a4c083a4c28200ff000e00aa",
+    "vendor_value": [
+      10.1,
+      43.12,
+      0.85,
+      9.59,
+      43.74,
+      0.85,
+      10.61,
+      53.72,
+      0.85,
+      10.61,
+      54.96,
+      0.61
+    ]
+  },
+  "read_roll": {
+    "frame_hex": "55000c1262987ce1bdcd00aa",
+    "vendor_value": -0.11
+  },
+  "read_pitch": {
+    "frame_hex": "55000c12632621053ef400aa",
+    "vendor_value": 0.13
+  },
+  "read_yaw": {
+    "frame_hex": "55000c126400621abf4200aa",
+    "vendor_value": -0.6
+  },
+  "read_imu_raw": {
+    "frame_hex": "5500201265eeff4a00aac0e5fffbfff8ff45a603be1722ab3d00621abfea00aa",
+    "vendor_value": [
+      -0.0107666015625,
+      0.0442626953125,
+      -9.6983154296875,
+      -1.6463414634146343,
+      -0.30487804878048785,
+      -0.48780487804878053,
+      -0.0022427267779906593,
+      0.0014576772277553878,
+      -0.010520009358723959
+    ]
+  }
+}

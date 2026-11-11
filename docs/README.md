@@ -44,11 +44,22 @@ docs/
 | 文档 | 内容简介 |
 | --- | --- |
 | [windows-setup.md](development/windows-setup.md) | 面向全新 Windows 环境的 WSL2 Ubuntu 22.04、Humble、Python、GitHub CLI 与 SSH 安装、自检和使用指南。 |
+| [device-capture-round.md](development/device-capture-round.md) | 分步采集、后台监管、真实收录回执、来源缺失、每轮导出/哈希/实际回放与显式清理；区分合成测试与真机待验证项。 |
+| [device-capture-entry.md](development/device-capture-entry.md) | 首次采集 ROS 控制与反馈入口的构建、mock、真机接管前提、命令、原始反馈及关闭审计语义。 |
 
 ### report：调查与评估
 
 | 文档 | 内容简介 |
 | --- | --- |
+| [device-motion-stage-capture-2026-11-11.md](report/device-motion-stage-capture-2026-11-11.md) | 无相机动态阶段交付：三档直行和左右转、逐段事件/雷达覆盖及回放；披露无效反馈、退出异常与中间执行事故。 |
+| [device-no-camera-stationary-capture-2026-11-11.md](report/device-no-camera-stationary-capture-2026-11-11.md) | 无相机静止补测，雷达/反馈连续性与负载改善；保留雷达关闭异常、入口尾部审计及导出回放证据。 |
+| [device-first-stationary-capture-2026-11-10.md](report/device-first-stationary-capture-2026-11-10.md) | SD 卡在线扩容、真实校时、首次联合静止录制及导出回放证据；记录收录间隔、图像缺帧和驱动退出异常，静止验收未通过。 |
+| [device-capture-round-acceptance-2026-11-09.md](report/device-capture-round-acceptance-2026-11-09.md) | 分步采集工具本地软件验收，Humble 127项测试、正常/异常合成轮次、导出回放与明确真机边界；独立代码审查留下一轮。 |
+| [device-capture-round-review-fixes-2026-11-09.md](report/device-capture-round-review-fixes-2026-11-09.md) | 后续代码审查的两项 P1、两项 P2 修复与回归证据，以及用户决定暂缓的 P3 持久化逻辑重复问题。 |
+| [device-capture-entry-acceptance-2026-11-08.md](report/device-capture-entry-acceptance-2026-11-08.md) | ROS 入口实现与独立审查闭环，Humble 构建、80 项测试及模拟 bag 录制回放验收；真机部署仍待验证。 |
+| [device-capture-readonly-verification-2026-11-09.md](report/device-capture-readonly-verification-2026-11-09.md) | ROS 入口 arm64 构建与真机只读反馈、部署权限修正、实际频率、串口排他及退出释放验证；未运动或正式全量采集。 |
+| [device-first-capture-verification-2026-11-08.md](report/device-first-capture-verification-2026-11-08.md) | 首次采集方案实机复核：IMU/关节/电池有效返回、相机去盖复查、雷达退出异常、磁盘/时钟及资源交接。 |
+| [device-first-capture-investigation-2026-11-06.md](report/device-first-capture-investigation-2026-11-06.md) | issue #4 首次全量采集前置调查：实机资源与录包工具、APP 数据覆盖缺口、方案决策与试采门槛。 |
 | [pstack-assessment-2026-11-06.md](report/pstack-assessment-2026-11-06.md) | pstack 官方工作流、宿主依赖、与现有协作规范的冲突，以及有限自动编码试点建议；未安装或运行。 |
 | [dogzilla-system-audit-2026-11-05.md](report/dogzilla-system-audit-2026-11-05.md) | 实机系统分层、开机服务、28 个厂商包及依赖、A/B/C/D 接入边界；MS200 数据实测与退出异常。 |
 | [dogzilla-interface-audit-2026-11-05.md](report/dogzilla-interface-audit-2026-11-05.md) | 雷达、运动、IMU、关节和 TF 的源码接口、单位、时间、QoS、失败语义与证据哈希。 |

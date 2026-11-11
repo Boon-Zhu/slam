@@ -1,0 +1,10 @@
+string session_id
+string request_id
+# forward, left, or right; magnitude is vendor input, not physical velocity.
+string action
+int32 magnitude
+float64 duration_s
+---
+bool accepted
+string reason
+string request_id

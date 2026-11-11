@@ -1,0 +1,15 @@
+/capture/device/capture_entry:
+  ros__parameters:
+    backend: vendor
+    enable_motion: false
+    use_sim_time: false
+    port: /dev/ttyAMA0
+    lock_path: /run/lock/dogzilla-ttyAMA0.lock
+    fresh_hardware_session: false
+    feedback_capacity: 1024
+    read_imu_raw_hz: 20.0
+    read_motor_hz: 10.0
+    read_battery_hz: 1.0
+    read_roll_hz: 1.0
+    read_pitch_hz: 1.0
+    read_yaw_hz: 1.0
