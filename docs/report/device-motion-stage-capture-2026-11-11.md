@@ -73,6 +73,7 @@
 
 ## 5. 交付与收尾
 
+- [阶段数据使用指南](../development/device-motion-data.md)用于选轮次、查文件、复现离线回放，以及按 A/B/C/D 职责将数据用于后续开发。
 - [阶段交付压缩包](../../.local/device-motion-2026-11-11/delivery/slam-stage-data-20261111.tar.gz)：无相机静止基线、最终动态数据、自定义接口/工具快照、接收方 README、动作窗口及限制；两个中间轮次放在 diagnostics，保留错误调查证据。
 - [动态数据目录](../../.local/device-motion-2026-11-11/datasets/20261111T162132-97e6f5fe7058/)；[现场观察](../../.local/device-motion-2026-11-11/recapture-observations.json)；[执行证据](../../.local/device-motion-2026-11-11/)。额外材料只写 `verification/`，不改已封存原始 manifest。
 - 机器人各轮原件均保留：`/home/pi/slam-capture-motion-20261111/{current,retry1/current,recapture/current}`。APP/OLED 仍临时停止、开机配置未禁用；媒体服务未接管。空闲采集容器、临时 NTP relay/SSH 转发已停止，用户 SSH 主连接保留。

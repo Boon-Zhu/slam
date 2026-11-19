@@ -46,6 +46,12 @@ docs/
 | [windows-setup.md](development/windows-setup.md) | 面向全新 Windows 环境的 WSL2 Ubuntu 22.04、Humble、Python、GitHub CLI 与 SSH 安装、自检和使用指南。 |
 | [device-capture-round.md](development/device-capture-round.md) | 分步采集、后台监管、真实收录回执、来源缺失、每轮导出/哈希/实际回放与显式清理；区分合成测试与真机待验证项。 |
 | [device-capture-entry.md](development/device-capture-entry.md) | 首次采集 ROS 控制与反馈入口的构建、mock、真机接管前提、命令、原始反馈及关闭审计语义。 |
+| [device-motion-data.md](development/device-motion-data.md) | 无相机阶段数据使用总览，按轮次与 A/B/C/D 开发任务引导阅读。 |
+| [device-motion-data-package.md](development/device-motion-data-package.md) | 交付包布局、文件与话题字典、时间轴、五个动作窗口、接收方哈希及回放。 |
+| [device-motion-data-device.md](development/device-motion-data-device.md) | A 的实际采集通路、扫描和反馈语义、运动证据及接口交付项。 |
+| [device-motion-data-mapping.md](development/device-motion-data-mapping.md) | B 的离线运动估计、TF、建图和保存验证，以及选型需要的额外证据。 |
+| [device-motion-data-protection.md](development/device-motion-data-protection.md) | C 的扫描判定、保护状态回归和真机停车验证所需参照。 |
+| [device-motion-data-integration.md](development/device-motion-data-integration.md) | D 的隔离回放、时钟与 TF 配置、状态汇总及集成验收。 |
 
 ### report：调查与评估
 
