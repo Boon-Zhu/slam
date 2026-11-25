@@ -24,6 +24,7 @@ docs/
 | 文档 | 内容简介 |
 | --- | --- |
 | [interface-baseline-decisions.md](architecture/interface-baseline-decisions.md) | 接口责任、技术栈、人员分工、版本范围、运动与故障行为、开发环境和 CI 的阶段决议，以及待核实事项。 |
+| [cartographer-mapping.md](architecture/cartographer-mapping.md) | 2026-11-25 确认的快速验证版 Cartographer 2D 方案、固定版本与完整配置、人工复核及离线证据、B/D 保存缺口和部署待办。 |
 
 ### adr：单项架构决策
 
